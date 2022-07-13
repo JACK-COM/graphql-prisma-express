@@ -4,13 +4,17 @@
 
 type Mutation {
   createUser(email: String!, password: String!): UserExternal
-  deleteUser(data: UserByIdInput): UserExternal
-  updateUser(data: UserByIdInput): UserExternal
+  deleteUser(data: ResourceByIdInput): UserExternal
+  updateUser(data: UserQueryInput): UserExternal
 }
 
 type Query {
-  user(data: UserUpdateInput): UserExternal
-  users(email: String): [UserExternal]!
+  getUser(data: UserQueryInput): UserExternal
+  listUsers(email: String): [UserExternal]
+}
+
+input ResourceByIdInput {
+  id: Int!
 }
 
 type User {
@@ -20,26 +24,14 @@ type User {
   password: String!
 }
 
-input UserByIdInput {
-  email: String
-  id: Int!
-  password: String
-}
-
 type UserExternal {
   email: String!
   id: Int!
   lastSeen: String!
 }
 
-type UserParamsInput {
+input UserQueryInput {
   email: String
-  id: Int
-  password: String
-}
-
-input UserUpdateInput {
-  email: String
-  id: Int
+  id: Int!
   password: String
 }

@@ -1,14 +1,20 @@
-import "graphql-import-node";
-import { makeExecutableSchema } from "@graphql-tools/schema";
-import * as Queries from "./queries";
-import * as Mutations from "./mutations";
-import typeDefs from "./schema/schema.graphql";
+import { makeSchema } from "nexus";
+import { join } from "path";
+import * as types from "./types";
 
-export {}
-// export const schema = makeExecutableSchema({
-//   typeDefs,
-//   resolvers: {
-//     Query: { ...Queries },
-//     Mutation: { ...Mutations },
-//   },
-// });
+export const schema = makeSchema({
+  // Data classes (used to generate SDL types)
+  types,
+
+  // Directory where nexus-generated files go
+  outputs: {
+    typegen: join(__dirname, "schema", "nexus-typegen.ts"),
+    schema: join(__dirname, "schema", "schema.graphql"),
+  },
+
+  // Context file source
+  contextType: {
+    export: "GQLContext",
+    module: join(__dirname, "context.ts"),
+  },
+});

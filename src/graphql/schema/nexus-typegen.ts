@@ -14,14 +14,12 @@ declare global {
 }
 
 export interface NexusGenInputs {
-  UserByIdInput: { // input type
+  ResourceByIdInput: { // input type
+    id: number; // Int!
+  }
+  UserQueryInput: { // input type
     email?: string | null; // String
     id: number; // Int!
-    password?: string | null; // String
-  }
-  UserUpdateInput: { // input type
-    email?: string | null; // String
-    id?: number | null; // Int
     password?: string | null; // String
   }
 }
@@ -51,11 +49,6 @@ export interface NexusGenObjects {
     id: number; // Int!
     lastSeen: string; // String!
   }
-  UserParamsInput: { // root type
-    email?: string | null; // String
-    id?: number | null; // Int
-    password?: string | null; // String
-  }
 }
 
 export interface NexusGenInterfaces {
@@ -75,8 +68,8 @@ export interface NexusGenFieldTypes {
     updateUser: NexusGenRootTypes['UserExternal'] | null; // UserExternal
   }
   Query: { // field return type
-    user: NexusGenRootTypes['UserExternal'] | null; // UserExternal
-    users: Array<NexusGenRootTypes['UserExternal'] | null>; // [UserExternal]!
+    getUser: NexusGenRootTypes['UserExternal'] | null; // UserExternal
+    listUsers: Array<NexusGenRootTypes['UserExternal'] | null> | null; // [UserExternal]
   }
   User: { // field return type
     email: string; // String!
@@ -89,11 +82,6 @@ export interface NexusGenFieldTypes {
     id: number; // Int!
     lastSeen: string; // String!
   }
-  UserParamsInput: { // field return type
-    email: string | null; // String
-    id: number | null; // Int
-    password: string | null; // String
-  }
 }
 
 export interface NexusGenFieldTypeNames {
@@ -103,8 +91,8 @@ export interface NexusGenFieldTypeNames {
     updateUser: 'UserExternal'
   }
   Query: { // field return type name
-    user: 'UserExternal'
-    users: 'UserExternal'
+    getUser: 'UserExternal'
+    listUsers: 'UserExternal'
   }
   User: { // field return type name
     email: 'String'
@@ -117,11 +105,6 @@ export interface NexusGenFieldTypeNames {
     id: 'Int'
     lastSeen: 'String'
   }
-  UserParamsInput: { // field return type name
-    email: 'String'
-    id: 'Int'
-    password: 'String'
-  }
 }
 
 export interface NexusGenArgTypes {
@@ -131,17 +114,17 @@ export interface NexusGenArgTypes {
       password: string; // String!
     }
     deleteUser: { // args
-      data?: NexusGenInputs['UserByIdInput'] | null; // UserByIdInput
+      data?: NexusGenInputs['ResourceByIdInput'] | null; // ResourceByIdInput
     }
     updateUser: { // args
-      data?: NexusGenInputs['UserByIdInput'] | null; // UserByIdInput
+      data?: NexusGenInputs['UserQueryInput'] | null; // UserQueryInput
     }
   }
   Query: {
-    user: { // args
-      data?: NexusGenInputs['UserUpdateInput'] | null; // UserUpdateInput
+    getUser: { // args
+      data?: NexusGenInputs['UserQueryInput'] | null; // UserQueryInput
     }
-    users: { // args
+    listUsers: { // args
       email?: string | null; // String
     }
   }

@@ -1,28 +1,24 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": "./src",
-    "downlevelIteration": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "lib": ["ESNext", "DOM", "ESNext.AsyncIterable", "ES2018"],
-    "noEmit": false,
     "declaration": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "useDefineForClassFields": true,
-    "module": "commonJs",
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "lib": ["es2015"],
+    "module": "commonjs",
     "moduleResolution": "node",
+    "noEmit": false,
     "noImplicitAny": false,
     "noImplicitReturns": true,
-    "outDir": "./lib/",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "./lib",
     "rootDir": "./src",
+    "skipLibCheck": true,
     "sourceMap": false,
     "strict": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es2018"
+    "target": "es5",
+    "useDefineForClassFields": true
   },
-  "include": ["./src/**/*", "./package.json"],
-  "exclude": ["./node_modules", "./lib", "./**/*.test.*"]
+  "include": ["src/"]
 }

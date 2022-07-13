@@ -3,16 +3,15 @@ import express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import { rateLimit } from "express-rate-limit";
-
-// import authRoutes from "./routes/admin/auth";
-// import { checkGraphQLReq } from "./middleware/graphql";
 import { ApolloServer } from "apollo-server-express";
-import { schema } from "./graphql/nexus";
+import { schema } from "./graphql";
 import { context } from "./graphql/context";
 import logger from "./logger";
 
+// Configure .env file source
 dotenv.config({ path: "./../.env" });
 
+/** Run server */
 async function main() {
   const app = express();
   const apolloServer = new ApolloServer({ context, schema });
@@ -25,17 +24,16 @@ async function main() {
     max: 100,
     standardHeaders: true,
     legacyHeaders: false,
-    message: "Too many requests; please try again later",
+    message: "Too many requests; please try again later"
   });
 
   app.use(morgan("dev"));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
-  app.use(limiter)
-  // app.use("/graphql", limiter, checkGraphQLReq);
-  // app.use("/api/auth", limiter, authRoutes);
+  app.use(limiter);
+
   app.listen(PORT, () => {
-    logger.info(`Server running on port: ${PORT}`);
+    logger.info(`Running on http://localhost:${PORT}`);
   });
 }
 

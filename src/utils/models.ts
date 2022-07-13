@@ -1,5 +1,5 @@
 import { PrismaClient, User } from "@prisma/client";
-import { toUTCString } from "./date";
+import { DateTime } from "luxon";
 
 export type UserDB = PrismaClient["user"];
 export type UserInput<T = Partial<User>> = { id?: User["id"] } & {
@@ -7,14 +7,16 @@ export type UserInput<T = Partial<User>> = { id?: User["id"] } & {
 };
 
 /** Create a `user` object that can be exposed via api */
-export function toExternalUser(u: User | null) {
-  if (u === null) return null;
-
-  return {
-    id: u.id.toString(),
-    email: u.email,
-    lastSeen: toUTCString(u.lastSeen),
-  };
+export function toExternalUser(dbUser: User | null) {
+  return dbUser
+    ? {
+        id: dbUser.id,
+        email: dbUser.email,
+        lastSeen: dbUser.lastSeen
+          ? DateTime.fromJSDate(dbUser.lastSeen).toRelative() || "never"
+          : "never"
+      }
+    : null;
 }
 
 /** Create a `user` object that can be exposed via api */
